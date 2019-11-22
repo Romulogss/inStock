@@ -7,7 +7,6 @@ from rest_framework.generics import (
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from django_filters import rest_framework as filters
 from .serializers import (
     ProdutoSerializer,
     LoteSerializer
