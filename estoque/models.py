@@ -6,7 +6,7 @@ from django.db import models
 class Lote(models.Model):
     nome_produto = models.CharField(max_length=100, unique=True)
     quantidade = models.IntegerField(null=True, blank=True)
-    codigo = models.IntegerField(unique=True)
+    codigo = models.CharField(max_length=10,unique=True)
     fabricacao = models.DateField()
     validade = models.DateField()
     entrada = models.DateField()
@@ -18,7 +18,7 @@ class Lote(models.Model):
 class Produto(models.Model):
     nome = models.CharField(max_length=100)
     valor = models.DecimalField(max_digits=5, decimal_places=2)
-    codigo = models.IntegerField(null=True, blank=True)
+    codigo = models.CharField(max_length=10,unique=True, null=True, blank=True)
     descricao = models.CharField(max_length=150)
     lote = models.ForeignKey(Lote, models.DO_NOTHING)
 
