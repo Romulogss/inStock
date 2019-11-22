@@ -20,7 +20,7 @@ class Produto(models.Model):
     valor = models.DecimalField(max_digits=5, decimal_places=2)
     codigo = models.CharField(max_length=10,unique=True, null=True, blank=True)
     descricao = models.CharField(max_length=150)
-    lote = models.ForeignKey(Lote, models.DO_NOTHING)
+    lote = models.ForeignKey(Lote, models.DO_NOTHING, related_name='produtos')
 
     def __str__(self):
         return self.nome

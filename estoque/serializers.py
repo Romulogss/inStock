@@ -1,8 +1,12 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import (
+    ModelSerializer,
+    PrimaryKeyRelatedField
+)
 from .models import *
 
 
 class LoteSerializer(ModelSerializer):
+    produtos = PrimaryKeyRelatedField(many=True, queryset=Produto.objects.all())
     class Meta:
         model = Lote
         fields = '__all__'
