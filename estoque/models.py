@@ -1,15 +1,16 @@
 from django.db import models
 
+
 # Create your models here.
 
 
 class Lote(models.Model):
-    nome_produto = models.CharField(max_length=100, unique=True)
-    quantidade = models.IntegerField(null=True, blank=True)
-    codigo = models.CharField(max_length=10,unique=True)
+    nome_produto = models.CharField(max_length=100)
+    quantidade = models.IntegerField(null=True, blank=True, default=0)
+    codigo = models.CharField(max_length=10, unique=True)
     fabricacao = models.DateField()
     validade = models.DateField()
-    entrada = models.DateField()
+    entrada = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.nome_produto
@@ -18,7 +19,7 @@ class Lote(models.Model):
 class Produto(models.Model):
     nome = models.CharField(max_length=100)
     valor = models.DecimalField(max_digits=5, decimal_places=2)
-    codigo = models.CharField(max_length=10,unique=True, null=True, blank=True)
+    codigo = models.CharField(max_length=10, unique=True, null=True, blank=True)
     descricao = models.CharField(max_length=150)
     lote = models.ForeignKey(Lote, models.DO_NOTHING, related_name='produtos')
 
@@ -26,7 +27,7 @@ class Produto(models.Model):
         return self.nome
 
     def save(self, *args, **kwargs):
-        #adicionando o código do lote ao produto
+        # adicionando o código do lote ao produto
         self.codigo = self.lote.codigo
         # Call the real save() method
         super(Produto, self).save(*args, **kwargs)
