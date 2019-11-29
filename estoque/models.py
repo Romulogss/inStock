@@ -44,7 +44,7 @@ class Produto(models.Model):
 
 
 class Lote(models.Model):
-    nome_produto = models.CharField(
+    nome = models.CharField(
         max_length=100
     )
     quantidade = models.IntegerField(

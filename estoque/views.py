@@ -31,7 +31,7 @@ class LoteDetail(RetrieveUpdateDestroyAPIView):
 class LoteBusca(APIView):
     def get_object(self, nome):
         try:
-            return Lote.objects.filter(nome_produto__contains=nome)
+            return Lote.objects.filter(nome__contains=nome)
         except Lote.DoesNotExist:
             raise Http404
 
