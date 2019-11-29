@@ -19,7 +19,7 @@ from .models import (
 
 
 class LoteList(ListCreateAPIView):
-    queryset = Lote.objects.all().order_by('nome_produto')
+    queryset = Lote.objects.all()
     serializer_class = LoteSerializer
 
 
@@ -31,7 +31,7 @@ class LoteDetail(RetrieveUpdateDestroyAPIView):
 class LoteBusca(APIView):
     def get_object(self, nome):
         try:
-            return Lote.objects.filter(nome_produto__contains=nome)
+            return Lote.objects.filter(nome__contains=nome)
         except Lote.DoesNotExist:
             raise Http404
 
@@ -50,28 +50,10 @@ class ProdutoList(ListCreateAPIView):
     no lote
     """
 
-    def post(self, request, *args, **kwargs):
-        produto = request.data
-        lote = Lote.objects.get(pk=int(produto['lote']))
-        if lote.quantidade is not None:
-            lote.quantidade += 1
-        else:
-            lote.quantidade = 1
-        lote.save()
-        return self.create(request, *args, **kwargs)
-
 
 class ProdutoDetail(RetrieveUpdateDestroyAPIView):
     queryset = Produto.objects.all().order_by('nome')
     serializer_class = ProdutoSerializer
-
-    def delete(self, request, *args, **kwargs):
-        produto = kwargs.get('pk')
-        produto = Produto.objects.get(pk=produto)
-        lote = produto.lote
-        lote.quantidade -= 1
-        lote.save()
-        return self.destroy(request, *args, **kwargs)
 
 
 class ProdutoBusca(APIView):
