@@ -19,7 +19,7 @@ from .models import (
 
 
 class LoteList(ListCreateAPIView):
-    queryset = Lote.objects.all().order_by('nome_produto')
+    queryset = Lote.objects.all()
     serializer_class = LoteSerializer
 
 
