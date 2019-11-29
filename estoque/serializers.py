@@ -2,7 +2,10 @@ from rest_framework.serializers import (
     ModelSerializer,
     PrimaryKeyRelatedField
 )
-from .models import *
+from .models import (
+    Produto,
+    Lote
+)
 
 
 class LoteSerializer(ModelSerializer):
