@@ -2,5 +2,4 @@
 .vEnv
 .vscode
 .DS_Store
-*.sqlite3
 *pyc
