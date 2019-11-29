@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'api-mercado-django-2.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'api-mercado-django.herokuapp.com']
 
 # Application definition
 
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'inStock.wsgi.application'
 
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
-DATABASES = {'default': config(default_dburl, default=default_dburl, cast=dburl), }
+DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
