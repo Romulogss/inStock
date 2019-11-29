@@ -6,6 +6,7 @@ from rest_framework.generics import (
 )
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import status
 
 from .serializers import (
     ProdutoSerializer,
@@ -49,7 +50,46 @@ class ProdutoList(ListCreateAPIView):
     sobescrevendo o método POST para adicionar lógica de quantidade de produto
     no lote
     """
-
+    """
+    codigo: '',
+                nome_produto:'',
+                tipo: '',
+                data_fabricacao: '',
+                validade: '',
+                lotes: '',
+                unidades: '',
+                preco_unidade: ''
+    """
+    def post(self, request, *args, **kwargs):
+        try:
+            data = request.data
+            preco_lote = data.preco_unidade * data.unidades
+            produto = Produto(
+                nome=data.nome_produto,
+                preco=data.preco_unidade,
+                codigo=data.codigo,
+                tipo=data.tipo,
+                fabricacao=data.data_fabricacao,
+                validade=data.validade,
+                unidades=data.unidades
+                )
+            produto.save()
+            lotes = []
+            for lote in range(data.lotes):
+                l = Lote(
+                    codigo=data.codigo,
+                    quantidade=data.unidades,
+                    fabricacao=data.data_fabricacao,
+                    validade=data.validade,
+                    produto=produto.id,
+                    preco=data.preco_lote
+                )
+                lotes.append(l)
+            Lote.objects.bulk_create(lotes)
+            produto = ProdutoSerializer(data=produto)
+            return Response(produto.data, status=status.HTTP_201_CREATED)
+        except Exception:
+            return self.create(request, *args, **kwargs)
 
 class ProdutoDetail(RetrieveUpdateDestroyAPIView):
     queryset = Produto.objects.all().order_by('nome')

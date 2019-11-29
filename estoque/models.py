@@ -22,12 +22,8 @@ class Produto(models.Model):
     )
     codigo = models.CharField(
         max_length=10,
-        unique=True,
         null=True,
         blank=True
-    )
-    descricao = models.CharField(
-        max_length=150
     )
     tipo = models.ForeignKey(
         Tipo,
@@ -44,9 +40,6 @@ class Produto(models.Model):
 
 
 class Lote(models.Model):
-    nome = models.CharField(
-        max_length=100
-    )
     quantidade = models.IntegerField(
         null=True,
         blank=True,
@@ -54,7 +47,6 @@ class Lote(models.Model):
     )
     codigo = models.CharField(
         max_length=10,
-        unique=True
     )
     fabricacao = models.DateField()
     validade = models.DateField()
@@ -70,4 +62,4 @@ class Lote(models.Model):
     )
 
     def __str__(self):
-        return self.nome
+        return self.codigo
