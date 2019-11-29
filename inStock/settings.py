@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'api-mercado-django.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'api-mercado-django.herokuapp.com']
 
 # Application definition
 

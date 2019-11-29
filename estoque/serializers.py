@@ -7,7 +7,6 @@ from .models import (
     Lote
 )
 
-
 class LoteSerializer(ModelSerializer):
 
     class Meta:
