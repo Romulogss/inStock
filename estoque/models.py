@@ -10,7 +10,7 @@ class Lote(models.Model):
     codigo = models.CharField(max_length=10, unique=True)
     fabricacao = models.DateField()
     validade = models.DateField()
-    entrada = models.DateField(auto_now=True)
+    entrada = models.DateField()
 
     def __str__(self):
         return self.nome_produto
@@ -31,3 +31,10 @@ class Produto(models.Model):
         self.codigo = self.lote.codigo
         # Call the real save() method
         super(Produto, self).save(*args, **kwargs)
+
+
+class Tipo(models.Model):
+    nome = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nome
