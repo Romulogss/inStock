@@ -34,25 +34,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='lote',
             name='nome',
-            field=models.CharField(default='OI', max_length=100),
+            field=models.CharField(default="", max_length=100),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='lote',
             name='preco',
-            field=models.DecimalField(decimal_places=2, default=3.0, max_digits=10),
+            field=models.DecimalField(decimal_places=2, default=0, max_digits=10),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='lote',
             name='produto',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, related_name='lotes', to='estoque.Produto'),
+            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.DO_NOTHING, related_name='lotes', to='estoque.Produto'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='produto',
             name='fabricacao',
-            field=models.DateField(default=1998),
+            field=models.DateField(default="2019-10-11"),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='produto',
             name='validade',
-            field=models.DateField(default=2004),
+            field=models.DateField(default="2004-11-12"),
             preserve_default=False,
         ),
         migrations.AlterField(
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='produto',
             name='tipo',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, related_name='produtos', to='estoque.Tipo'),
+            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.DO_NOTHING, related_name='produtos', to='estoque.Tipo'),
             preserve_default=False,
         ),
     ]
