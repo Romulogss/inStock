@@ -66,23 +66,23 @@ class ProdutoList(ListCreateAPIView):
             preco_lote = data.preco_unidade * data.unidades
             produto = Produto(
                 nome=data.nome_produto,
-                preco=data.preco_unidade,
+                preco=float(data.preco_unidade),
                 codigo=data.codigo,
-                tipo=data.tipo,
+                tipo=int(data.tipo),
                 fabricacao=data.data_fabricacao,
                 validade=data.validade,
-                unidades=data.unidades
+                unidades=int(data.unidades)
                 )
             produto.save()
             lotes = []
             for lote in range(data.lotes):
                 l = Lote(
                     codigo=data.codigo,
-                    quantidade=data.unidades,
+                    quantidade=int(data.unidades),
                     fabricacao=data.data_fabricacao,
                     validade=data.validade,
-                    produto=produto.id,
-                    preco=data.preco_lote
+                    produto=int(produto.id),
+                    preco=float(data.preco_lote)
                 )
                 lotes.append(l)
             Lote.objects.bulk_create(lotes)
