@@ -82,7 +82,7 @@ class ProdutoList(ListCreateAPIView):
                     fabricacao=data.data_fabricacao,
                     validade=data.validade,
                     produto=int(produto.id),
-                    preco=float(data.preco_lote)
+                    preco=float(preco_lote)
                 )
                 lotes.append(l)
             Lote.objects.bulk_create(lotes)
