@@ -36,7 +36,7 @@ class LoteDetail(RetrieveUpdateDestroyAPIView):
 class LoteBusca(APIView):
     def get_object(self, nome):
         try:
-            return Lote.objects.filter(nome__contains=nome)
+            return Lote.objects.filter(nome__icontains=nome)
         except Lote.DoesNotExist:
             raise Http404
 
@@ -51,18 +51,7 @@ class ProdutoList(ListCreateAPIView):
     serializer_class = ProdutoSerializer
 
     """
-    sobescrevendo o método POST para adicionar lógica de quantidade de produto
-    no lote
-    """
-    """
-    codigo: '',
-                nome_produto:'',
-                tipo: '',
-                data_fabricacao: '',
-                validade: '',
-                lotes: '',
-                unidades: '',
-                preco_unidade: ''
+    Ao adicionar um lote alocamos os dados em seus devidos lugares apropriados
     """
 
     def post(self, request, *args, **kwargs):
