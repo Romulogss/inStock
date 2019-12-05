@@ -1,4 +1,5 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django.shortcuts import render
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -14,8 +15,11 @@ from .serializers import (
 )
 from .models import (
     Lote,
-    Produto
+    Produto,
+    Tipo
 )
+
+
 # Create your views here.
 
 
@@ -60,36 +64,40 @@ class ProdutoList(ListCreateAPIView):
                 unidades: '',
                 preco_unidade: ''
     """
+
     def post(self, request, *args, **kwargs):
         try:
             data = request.data
-            preco_lote = data.preco_unidade * data.unidades
+            preco_lote = float(data['preco_unidade']) * int(data['unidades'])
+            tipo = Tipo.objects.get(pk=int(data['tipo']))
             produto = Produto(
-                nome=data.nome_produto,
-                preco=float(data.preco_unidade),
-                codigo=data.codigo,
-                tipo=int(data.tipo),
-                fabricacao=data.data_fabricacao,
-                validade=data.validade,
-                unidades=int(data.unidades)
-                )
+                nome=data['nome_produto'],
+                preco=float(data['preco_unidade']),
+                codigo=data['codigo'],
+                tipo=tipo,
+                fabricacao=data['data_fabricacao'],
+                validade=data['validade'],
+                unidades=int(data['unidades'])
+            )
             produto.save()
             lotes = []
-            for lote in range(data.lotes):
+            for lote in range(int(data['lotes'])):
                 l = Lote(
-                    codigo=data.codigo,
-                    quantidade=int(data.unidades),
-                    fabricacao=data.data_fabricacao,
-                    validade=data.validade,
-                    produto=int(produto.id),
+                    codigo=data['codigo'],
+                    quantidade=int(data['unidades']),
+                    fabricacao=data['data_fabricacao'],
+                    validade=data['validade'],
+                    produto=produto,
                     preco=float(preco_lote)
                 )
                 lotes.append(l)
             Lote.objects.bulk_create(lotes)
-            produto = ProdutoSerializer(data=produto)
+            produto = ProdutoSerializer(produto)
             return Response(produto.data, status=status.HTTP_201_CREATED)
         except Exception:
+            print()
             return self.create(request, *args, **kwargs)
+
 
 class ProdutoDetail(RetrieveUpdateDestroyAPIView):
     queryset = Produto.objects.all().order_by('nome')
@@ -100,7 +108,7 @@ class ProdutoBusca(APIView):
 
     def get_object(self, nome):
         try:
-            return Produto.objects.filter(nome__contains=nome)
+            return Produto.objects.filter(nome__icontains=nome)
         except Produto.DoesNotExist:
             raise Http404
 

@@ -50,7 +50,7 @@ class Lote(models.Model):
     )
     fabricacao = models.DateField()
     validade = models.DateField()
-    entrada = models.DateField()
+    entrada = models.DateField(auto_now=True)
     produto = models.ForeignKey(
         Produto,
         models.DO_NOTHING,
